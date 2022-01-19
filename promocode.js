@@ -2,15 +2,14 @@ document.addEventListener('DOMContentLoaded', askPromoCode());
 
 function askPromoCode() {
   let isPromoCodeCorrect = false;
-
   while (!isPromoCodeCorrect) {
-    let promoCode = +prompt('Enter Promocode');
+    let promoCode = prompt('Enter Promocode');
     if (isNaN(promoCode)) {
       alert('Your promocode is not a number');
-      continue;
+      break;
     } else if (!promoCode) {
       alert('You did not enter Promocode');
-      continue;
+      break;
     } else {
       isPromoCodeCorrect = true;
       countDigits(promoCode);
@@ -29,28 +28,32 @@ function countDigits(promoCode) {
   }
 }
 
-function compareSumEvenOdds(promoCode) {
+function createSplitNumbers(promoCode) {
   let splitNumbersPromocode = [];
 
   while (promoCode) {
     splitNumbersPromocode.push(promoCode % 10);
     promoCode = Math.floor(promoCode / 10);
+    break;
   }
-  splitNumbersPromocode.reverse();
+  return splitNumbersPromocode.reverse();
+}
 
+function compareSumEvenOdds(promoCode) {
   let sumEven = 0;
   let sumOdd = 0;
+  const splitNumbersPromocode = createSplitNumbers(promoCode);
 
   for (let i = 0; i < splitNumbersPromocode.length; ++i) {
     if (splitNumbersPromocode[i] % 2) {
-      sumEven += splitNumbersPromocode[i];
-    } else {
       sumOdd += splitNumbersPromocode[i];
+    } else {
+      sumEven += splitNumbersPromocode[i];
     }
   }
-  debugger;
+
   if (sumEven > sumOdd) {
-    getResult(splitNumbersPromocode);
+    getResult(promoCode);
   } else {
     alert('0');
   }
@@ -71,7 +74,8 @@ function checkEvenOddEntries(promoCode) {
   );
 }
 
-function verifyCequence(splitNumbersPromocode) {
+function verifyCequence(promoCode) {
+  const splitNumbersPromocode = createSplitNumbers(promoCode);
   return Boolean(
     (splitNumbersPromocode[0] < splitNumbersPromocode[1] &&
       splitNumbersPromocode[4] < splitNumbersPromocode[5]) ||
@@ -80,9 +84,9 @@ function verifyCequence(splitNumbersPromocode) {
   );
 }
 
-function getResult(splitNumbersPromocode) {
-  const isEvenEntries = checkEvenOddEntries(splitNumbersPromocode);
-  const isNumberCequence = verifyCequence(splitNumbersPromocode);
+function getResult(promoCode) {
+  const isEvenEntries = checkEvenOddEntries(promoCode);
+  const isNumberCequence = verifyCequence(promoCode);
 
   if (isEvenEntries && isNumberCequence) {
     alert('2000');
