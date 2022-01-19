@@ -19,31 +19,31 @@ function askPromoCode() {
 }
 
 function countDigits(promoCode) {
-  let b = Math.max(Math.floor(Math.log10(Math.abs(promoCode))), 0) + 1;
-  b === 8 ? CreateArrNum(promoCode) : alert('Promocode is not correct');
+  let lengthPromoCode =
+    Math.max(Math.floor(Math.log10(Math.abs(promoCode))), 0) + 1;
+  lengthPromoCode === 8
+    ? createNumbers(promoCode)
+    : alert('Promocode is not correct');
 }
 
-function CreateArrNum(number) {
-  output = [];
-
-  while (number) {
-    output.push(number % 10);
-    number = Math.floor(number / 10);
+function createNumbers(promoCode) {
+  let splitNumbersPromocode = [];
+  while (promoCode) {
+    splitNumbersPromocode.push(promoCode % 10);
+    promoCode = Math.floor(promoCode / 10);
   }
-  output.reverse();
-  getResult(output);
-
-  console.log(output);
+  splitNumbersPromocode.reverse();
+  getResult(splitNumbersPromocode);
 }
 
-function SumEvenOdds(output) {
+function compareSumEvenOdds(splitNumbersPromocode) {
   let sumEven = 0;
   let sumOdd = 0;
-  for (let a = 0; a < output.length; a++) {
-    if (output[a] % 2) {
-      sumEven += output[a];
+  for (let i = 0; i < splitNumbersPromocode.length; ++i) {
+    if (splitNumbersPromocode[i] % 2) {
+      sumEven += splitNumbersPromocode[i];
     } else {
-      sumOdd += output[a];
+      sumOdd += splitNumbersPromocode[i];
     }
   }
 
@@ -54,42 +54,49 @@ function SumEvenOdds(output) {
   }
 }
 
-function CheckEvenOddEntries(output) {
-  let arrOfPair = [
-    Number(output.slice(0, 2).join('')),
-    Number(output.slice(2, 4).join('')),
-    Number(output.slice(4, 6).join('')),
-    Number(output.slice(6, 8).join('')),
+function checkEvenOddEntries(splitNumbersPromocode) {
+  let pairNumbers = [
+    Number(splitNumbersPromocode.slice(0, 2).join('')),
+    Number(splitNumbersPromocode.slice(2, 4).join('')),
+    Number(splitNumbersPromocode.slice(4, 6).join('')),
+    Number(splitNumbersPromocode.slice(6, 8).join('')),
   ];
-
   if (
-    (arrOfPair[0] % 2 && arrOfPair[2] % 2) ||
-    (arrOfPair[1] % 2 && arrOfPair[3] % 2)
+    (pairNumbers[0] % 2 && pairNumbers[2] % 2) ||
+    (pairNumbers[1] % 2 && pairNumbers[3] % 2)
   ) {
     return true;
   }
   return false;
 }
 
-function getResult(output) {
-  function VerifCequence(output) {
-    if (
-      (output[0] < output[1] && output[4] < output[5]) ||
-      (output[2] < output[3] && output[6] < output[7])
-    ) {
-      return true;
-    }
-    return false;
+function VerifCequence(splitNumbersPromocode) {
+  if (
+    (splitNumbersPromocode[0] < splitNumbersPromocode[1] &&
+      splitNumbersPromocode[4] < splitNumbersPromocode[5]) ||
+    (splitNumbersPromocode[2] < splitNumbersPromocode[3] &&
+      splitNumbersPromocode[6] < splitNumbersPromocode[7])
+  ) {
+    return true;
   }
+  return false;
+}
 
-  if (CheckEvenOddEntries(output) && VerifCequence(output)) {
+function getResult(splitNumbersPromocode) {
+  if (
+    checkEvenOddEntries(splitNumbersPromocode) &&
+    VerifCequence(splitNumbersPromocode)
+  ) {
     alert('2000');
-  } else if (CheckEvenOddEntries(output) && !VerifCequence(output)) {
+  } else if (
+    checkEvenOddEntries(splitNumbersPromocode) &&
+    !VerifCequence(splitNumbersPromocode)
+  ) {
     alert('1000');
   } else if (
-    !CheckEvenOddEntries(output) &&
-    !VerifCequence(output) &&
-    SumEvenOdds(output)
+    !checkEvenOddEntries(splitNumbersPromocode) &&
+    !VerifCequence(splitNumbersPromocode) &&
+    compareSumEvenOdds(splitNumbersPromocode)
   ) {
     alert('100');
   } else {
