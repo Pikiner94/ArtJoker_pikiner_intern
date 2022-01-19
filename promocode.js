@@ -21,24 +21,26 @@ function askPromoCode() {
 function countDigits(promoCode) {
   let lengthPromoCode =
     Math.max(Math.floor(Math.log10(Math.abs(promoCode))), 0) + 1;
-  lengthPromoCode === 8
-    ? createNumbers(promoCode)
-    : alert('Promocode is not correct');
+
+  if (lengthPromoCode === 8) {
+    compareSumEvenOdds(promoCode);
+  } else {
+    alert('Promocode is not correct');
+  }
 }
 
-function createNumbers(promoCode) {
+function compareSumEvenOdds(promoCode) {
   let splitNumbersPromocode = [];
+
   while (promoCode) {
     splitNumbersPromocode.push(promoCode % 10);
     promoCode = Math.floor(promoCode / 10);
   }
   splitNumbersPromocode.reverse();
-  getResult(splitNumbersPromocode);
-}
 
-function compareSumEvenOdds(splitNumbersPromocode) {
   let sumEven = 0;
   let sumOdd = 0;
+
   for (let i = 0; i < splitNumbersPromocode.length; ++i) {
     if (splitNumbersPromocode[i] % 2) {
       sumEven += splitNumbersPromocode[i];
@@ -46,58 +48,47 @@ function compareSumEvenOdds(splitNumbersPromocode) {
       sumOdd += splitNumbersPromocode[i];
     }
   }
-
+  debugger;
   if (sumEven > sumOdd) {
-    return false;
+    getResult(splitNumbersPromocode);
   } else {
-    return true;
+    alert('0');
   }
 }
 
-function checkEvenOddEntries(splitNumbersPromocode) {
-  let pairNumbers = [
-    Number(splitNumbersPromocode.slice(0, 2).join('')),
-    Number(splitNumbersPromocode.slice(2, 4).join('')),
-    Number(splitNumbersPromocode.slice(4, 6).join('')),
-    Number(splitNumbersPromocode.slice(6, 8).join('')),
-  ];
-  if (
+function checkEvenOddEntries(promoCode) {
+  let pairNumbers = [];
+
+  while (promoCode) {
+    pairNumbers.push(promoCode % 100);
+    promoCode = Math.floor(promoCode / 100);
+  }
+  pairNumbers.reverse();
+
+  return Boolean(
     (pairNumbers[0] % 2 && pairNumbers[2] % 2) ||
-    (pairNumbers[1] % 2 && pairNumbers[3] % 2)
-  ) {
-    return true;
-  }
-  return false;
+      (pairNumbers[1] % 2 && pairNumbers[3] % 2)
+  );
 }
 
-function VerifCequence(splitNumbersPromocode) {
-  if (
+function verifyCequence(splitNumbersPromocode) {
+  return Boolean(
     (splitNumbersPromocode[0] < splitNumbersPromocode[1] &&
       splitNumbersPromocode[4] < splitNumbersPromocode[5]) ||
-    (splitNumbersPromocode[2] < splitNumbersPromocode[3] &&
-      splitNumbersPromocode[6] < splitNumbersPromocode[7])
-  ) {
-    return true;
-  }
-  return false;
+      (splitNumbersPromocode[2] < splitNumbersPromocode[3] &&
+        splitNumbersPromocode[6] < splitNumbersPromocode[7])
+  );
 }
 
 function getResult(splitNumbersPromocode) {
-  if (
-    checkEvenOddEntries(splitNumbersPromocode) &&
-    VerifCequence(splitNumbersPromocode)
-  ) {
+  const isEvenEntries = checkEvenOddEntries(splitNumbersPromocode);
+  const isNumberCequence = verifyCequence(splitNumbersPromocode);
+
+  if (isEvenEntries && isNumberCequence) {
     alert('2000');
-  } else if (
-    checkEvenOddEntries(splitNumbersPromocode) &&
-    !VerifCequence(splitNumbersPromocode)
-  ) {
+  } else if (isEvenEntries && !isNumberCequence) {
     alert('1000');
-  } else if (
-    !checkEvenOddEntries(splitNumbersPromocode) &&
-    !VerifCequence(splitNumbersPromocode) &&
-    compareSumEvenOdds(splitNumbersPromocode)
-  ) {
+  } else if (!isEvenEntries && !isNumberCequence) {
     alert('100');
   } else {
     alert('0');
