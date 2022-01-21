@@ -4,9 +4,31 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
     <title>Document</title>
   </head>
   <body>
-    <script src="./promocode.js" type="module"></script>
+    <script src="./js/promocode.js" type="module"></script>
+    <section class="card">
+      <div class="card__wrapper">
+        <div class="card__pic"></div>
+        <div class="card__head">Кросовки</div>
+        <div class="card__desc">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta amet
+          natus animi voluptate ipsam soluta tempore.
+        </div>
+        <div class="card__sale">
+          <div class="card__price">8000</div>
+          <div class="card__discont">0</div>
+        </div>
+        <div class="card__promocode">
+          <div class="promocode__wrapper">
+            <input class="input" type="text" value="Enter your PromoCode" />
+            <button class="promocode__enter">Enter</button>
+          </div>
+        </div>
+        <button class="promocode__reset">Reset Promocode</button>
+      </div>
+    </section>
   </body>
 </html>

@@ -7,7 +7,11 @@ const checkOddsSequence = (pairEvenNumbers) => {
     }
   });
 
-  result ? alert('Your bonus is 2000') : alert('Your bonus is 1000');
+  if (result) {
+    return 2000;
+  } else {
+    return 1000;
+  }
 };
 
 const countDigits = (promoCode) => {
@@ -36,9 +40,11 @@ const checkCountOddsPair = (splitNumbersPromocode) => {
     }
   });
 
-  pairEvenNumbers.length >= 2
-    ? checkOddsSequence(pairEvenNumbers)
-    : alert('Your bonnus is 100');
+  if (pairEvenNumbers.length >= 2) {
+    checkOddsSequence(pairEvenNumbers);
+  } else {
+    return 100;
+  }
 };
 
 const compareSumEvenOdds = (splitNumbersPromocode) => {
@@ -56,7 +62,7 @@ const compareSumEvenOdds = (splitNumbersPromocode) => {
   if (sumEven > sumOdd) {
     checkCountOddsPair(splitNumbersPromocode);
   } else {
-    alert('0');
+    return 0;
   }
 };
 
@@ -77,4 +83,4 @@ const askPromoCode = () => {
   }
 };
 
-document.addEventListener('DOMContentLoaded', askPromoCode());
+// document.addEventListener('DOMContentLoaded', askPromoCode());
